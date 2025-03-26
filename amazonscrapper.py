@@ -40,5 +40,18 @@ def url_for_product(product):
         except:
            
             return data
-    
+        
+
+def get_product_details(url):
+    data={}
+    urlclient = uReq(url)
+    amazonpage = urlclient.read()
+    bsobj = BeautifulSoup(amazonpage, "html.parser")
+    aboutItem=bsobj.find("div",{"id":"feature-bullets"}).text 
+    customerReview=bsobj.find("div",{"id":"customerReviews"}).find("div",{"id":"product-summary"}).text
+    data["aboutItem"]=aboutItem
+    data["customerReview"]=customerReview
+    return data
+
+     
 
